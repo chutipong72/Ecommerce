@@ -145,14 +145,6 @@ const Users = new mongoose.model("Users", {
     type: String,
     required: true,
   },
-  address: {
-    type: String,
-    required: true,
-  },
-  phone_number: {
-    type: String,
-    required: true,
-  },
   date: {
     type: Date,
     default: Date.now,
@@ -182,8 +174,6 @@ app.post("/signup", async (req, res) => {
     username: req.body.username,
     email: req.body.email,
     password: req.body.password,
-    address: req.body.address,
-    phone_number: req.body.phone_number,
     cart_data: cart,
   });
   await user.save();

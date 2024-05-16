@@ -99,30 +99,6 @@ const loginSignup = () => {
             type="password"
             placeholder="Password"
           />
-          {state === "Sign Up" ? (
-            <input
-              name="address"
-              value={formData.address}
-              onChange={changeHandler}
-              className="h-[48px] w-full pl-[20px] border border-gray-300 outline-none text-gray-500 text-[18px]"
-              type="text"
-              placeholder="Address"
-            />
-          ) : (
-            <></>
-          )}
-          {state === "Sign Up" ? (
-            <input
-              name="phone_number"
-              value={formData.phone_number}
-              onChange={changeHandler}
-              className="h-[48px] w-full pl-[20px] border border-gray-300 outline-none text-gray-500 text-[18px]"
-              type="text"
-              placeholder="Phone Number"
-            />
-          ) : (
-            <></>
-          )}
         </div>
         <button
           onClick={() => {
