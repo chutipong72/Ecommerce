@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 const loginSignup = () => {
-  const [state, setState] = useState("Login");
+  const [state, setState] = useState('Login');
   const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-    email: "",
-    address: "",
-    phone_number: "",
+    username: '',
+    password: '',
+    email: '',
+    address: '',
+    phone_number: '',
   });
 
   const changeHandler = (e: any) => {
@@ -15,15 +15,15 @@ const loginSignup = () => {
   };
 
   const login = async () => {
-    console.log("Login Function Executed", formData);
+    console.log('Login Function Executed', formData);
     let responseData: { success?: boolean; token?: string; errors?: string } =
       {};
 
-    await fetch("http://localhost:4000/login", {
-      method: "POST",
+    await fetch('http://localhost:4000/login', {
+      method: 'POST',
       headers: {
-        Accept: "application/form-data",
-        "Content-Type": "application/json",
+        Accept: 'application/form-data',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(formData),
     })
@@ -32,24 +32,24 @@ const loginSignup = () => {
 
     if (responseData && responseData.success) {
       if (responseData.token) {
-        localStorage.setItem("auth-token", responseData.token);
+        localStorage.setItem('auth-token', responseData.token);
       }
-      window.location.replace("/");
+      window.location.replace('/');
     } else {
       alert(responseData.errors);
     }
   };
 
   const signup = async () => {
-    console.log("Sign Up Function Executed", formData);
+    console.log('Sign Up Function Executed', formData);
     let responseData: { success?: boolean; token?: string; errors?: string } =
       {};
 
-    await fetch("http://localhost:4000/signup", {
-      method: "POST",
+    await fetch('http://localhost:4000/signup', {
+      method: 'POST',
       headers: {
-        Accept: "application/form-data",
-        "Content-Type": "application/json",
+        Accept: 'application/form-data',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(formData),
     })
@@ -58,20 +58,32 @@ const loginSignup = () => {
 
     if (responseData && responseData.success) {
       if (responseData.token) {
-        localStorage.setItem("auth-token", responseData.token);
+        localStorage.setItem('auth-token', responseData.token);
       }
-      window.location.replace("/");
+      window.location.replace('/');
     } else {
       alert(responseData.errors);
     }
   };
 
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    if (state === 'Login') {
+      login();
+    } else {
+      signup();
+    }
+  };
+
   return (
-    <div className="w-full h-[100vh] bg-pink-200 pt-[80px]">
+    <form
+      className="w-full h-[100vh] bg-pink-200 pt-[80px]"
+      onSubmit={handleSubmit}
+    >
       <div className="w-[630px] h-[720px] bg-white m-auto py-[40px] px-[60px]">
         <h1 className="my-[20px] mx-0 text-[30px]">{state}</h1>
         <div className="flex flex-col gap-[29px] mt-[30px]">
-          {state === "Sign Up" ? (
+          {state === 'Sign Up' ? (
             <input
               name="username"
               value={formData.username}
@@ -99,7 +111,7 @@ const loginSignup = () => {
             type="password"
             placeholder="Password"
           />
-          {state === "Sign Up" ? (
+          {state === 'Sign Up' ? (
             <input
               name="address"
               value={formData.address}
@@ -111,7 +123,7 @@ const loginSignup = () => {
           ) : (
             <></>
           )}
-          {state === "Sign Up" ? (
+          {state === 'Sign Up' ? (
             <input
               name="phone_number"
               value={formData.phone_number}
@@ -125,19 +137,17 @@ const loginSignup = () => {
           )}
         </div>
         <button
-          onClick={() => {
-            state === "Login" ? login() : signup();
-          }}
+          type="submit"
           className="w-full h-[72px] text-white bg-red-500 mt-[30px] border-none text-[24px] font-medium cursor-pointer"
         >
           Continue
         </button>
-        {state === "Sign Up" ? (
+        {state === 'Sign Up' ? (
           <p className="mt-[20px] text-gray-500 font-medium text-[18px]">
-            Already have an account?{" "}
+            Already have an account?{' '}
             <span
               onClick={() => {
-                setState("Login");
+                setState('Login');
               }}
               className="text-red-700 font-semibold"
             >
@@ -146,10 +156,10 @@ const loginSignup = () => {
           </p>
         ) : (
           <p className="mt-[20px] text-gray-500 font-medium text-[18px]">
-            New member?{" "}
+            New member?{' '}
             <span
               onClick={() => {
-                setState("Sign Up");
+                setState('Sign Up');
               }}
               className="text-red-700 font-semibold"
             >
@@ -157,16 +167,16 @@ const loginSignup = () => {
             </span>
           </p>
         )}
-        {state === "Sign Up" ? (
-          <form className="flex items-center mt-[25px] gap-[20px] text-gray-500 text-[18px] font-medium">
-            <input type="checkbox" name="" id="" />
+        {state === 'Sign Up' ? (
+          <div>
+            <input type="checkbox" name="" id="" required />
             <p>By continuing, i agree to the terms of use & privacy policy.</p>
-          </form>
+          </div>
         ) : (
           <></>
         )}
       </div>
-    </div>
+    </form>
   );
 };
 
