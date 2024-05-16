@@ -11,7 +11,7 @@ const popular = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center gap-[10px] h-[90vh]">
+    <div className="flex flex-col items-center gap-[10px] h-[90vh] pt-7">
       <h1 className="text-black text-[50px] font-semibold">POPULAR IN WOMEN</h1>
       <hr className="w-[200px] h-[6px] border rounded-[10px] bg-black" />
       <div className="mt-[50px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[30px] justify-center">

@@ -13,7 +13,7 @@ const footer = () => {
     <div className="flex flex-col justify-center items-center gap-8 md:gap-16 lg:gap-20">
       <div className="flex items-center gap-4 md:gap-8">
         <img src={footer_logo} alt="" className="w-12 h-12 md:w-16 md:h-16" />
-        <p className="text-gray-700 text-2xl md:text-3xl font-bold">SHOPPER</p>
+        <p className="text-gray-700 text-2xl md:text-3xl font-bold">SHOPPALA</p>
       </div>
       <ul className="flex list-none gap-8 md:gap-16 text-black text-lg md:text-xl font-extralight">
         <li className="cursor-pointer">Company</li>
