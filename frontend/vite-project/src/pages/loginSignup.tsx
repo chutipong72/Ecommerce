@@ -6,8 +6,6 @@ const loginSignup = () => {
     username: "",
     password: "",
     email: "",
-    address: "",
-    phone_number: "",
   });
 
   const changeHandler = (e: any) => {
