@@ -30,7 +30,7 @@ const CheckOutItem = () => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ data, products: all_products }),
+      body: JSON.stringify({ ...data, products: all_products }),
     })
       .then((response) => response.json())
       .then((result) => {
