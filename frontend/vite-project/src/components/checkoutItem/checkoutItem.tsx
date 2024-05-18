@@ -1,46 +1,57 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { ShopContext } from '../contexts/shopContext';
-import { Link } from 'react-router-dom';
+import { useContext, useState } from "react";
+import { ShopContext } from "../contexts/shopContext";
 
 const CheckOutItem = () => {
-  const { getTotalCartAmount, all_products, cartItem } =
+  const { getTotalCartAmount, all_products, cartItem, clearCart } =
     useContext(ShopContext);
 
   const [data, setData] = useState({
-    firstname: '',
-    lastname: '',
-    phone: '',
-    country: '',
-    address: '',
-    city: '',
-    state: '',
-    zipcode: '',
+    firstname: "",
+    lastname: "",
+    phone: "",
+    country: "",
+    address: "",
+    city: "",
+    state: "",
+    zipcode: "",
   });
 
-  const changeHandler = (e: any) => {
+  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
-  const submit = (e: React.FormEvent) => {
+  const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Add your code here to submit the form data to the backend
-    console.log('Form Submitted', { data, all_products });
-    fetch('http://localhost:4000/addOrder', {
-      method: 'POST',
+
+    // กรองสินค้าที่อยู่ใน cartItem เท่านั้น
+    const filteredProducts = all_products.filter(
+      (product) => cartItem[product.id] > 0
+    );
+
+    console.log("Form Submitted", {
+      data,
+      products: filteredProducts,
+    });
+
+    fetch("http://localhost:4000/addOrder", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ ...data, products: all_products }),
+      body: JSON.stringify({
+        ...data,
+        products: filteredProducts,
+      }),
     })
       .then((response) => response.json())
       .then((result) => {
-        // Handle the response from the backend
         console.log(result);
       })
       .catch((error) => {
-        // Handle any errors that occurred during the request
         console.error(error);
       });
+
+    window.location.replace("/");
   };
 
   return (
@@ -126,11 +137,11 @@ const CheckOutItem = () => {
         />
         <div className="flex font-semibold text-2xl ml-5 mt-10 pt-5 pb-5 border rounded-[3px] w-[60%] md:w-[85%]">
           <h1 className="pl-5">Delivery details</h1>
-          <form className="flex justify-between gap-[20px] pl-[30px] text-black text-[20px] font-medium">
+          <div className="flex justify-between gap-[20px] pl-[30px] text-black text-[20px] font-medium">
             <input required type="checkbox" name="" id="" checked />
             <p>Standard Shipping</p>
             <p className="pl-0 md:pl-[100px] items-end text-red-600">Free</p>
-          </form>
+          </div>
         </div>
       </div>
       <div className="w-full md:w-1/2 mb-5 md:pl-10">
@@ -144,13 +155,13 @@ const CheckOutItem = () => {
           {all_products.map((e: any) => {
             if (cartItem[e.id] > 0) {
               return (
-                <div className="flex justify-between">
+                <div key={e.id} className="flex justify-between">
                   <img
                     src={e.image}
                     alt=""
                     className="h-16 md:h-24 pr-2 md:pr-4 pb-2 md:pb-5"
                   />
-                  <p className="text-sm  md:text-base pr-10 whitespace-nowrap">
+                  <p className="text-sm md:text-base pr-10 whitespace-nowrap">
                     {e.name}
                   </p>
                   <p className="pr-2 md:pr-7 ">{cartItem[e.id]}x</p>
@@ -168,6 +179,7 @@ const CheckOutItem = () => {
           <h3 className="font-medium text-[24px]">Total</h3>
           <h3 className="font-medium pt-[10px]">${getTotalCartAmount()}</h3>
           <button
+            onClick={clearCart}
             className="w-[162px] h-[48px] outline-none border-none bg-red-500 text-white text-[16px] font-semibold cursor-pointer"
             type="submit"
           >

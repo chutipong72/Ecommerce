@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { ShopContext } from "../contexts/shopContext";
 import remove_icon from "../assets/cart_cross_icon.png";
 import { Link } from "react-router-dom";

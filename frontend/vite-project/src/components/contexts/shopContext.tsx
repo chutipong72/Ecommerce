@@ -74,6 +74,23 @@ const ShopContextProvider = (props: ShopContextProviderProps) => {
     }
   };
 
+  const clearCart = () => {
+    setCartItem(getDefaultCart());
+    if (localStorage.getItem("auth-token")) {
+      fetch("http://localhost:4000/clearcart", {
+        method: "POST",
+        headers: {
+          Accept: "application/form-data",
+          "auth-token": `${localStorage.getItem("auth-token")}`,
+          "Content-Type": "application/json",
+        },
+        body: "",
+      })
+        .then((response) => response.json())
+        .then((data) => console.log(data));
+    }
+  };
+
   const getTotalCartAmount = () => {
     let totalAmount = 0;
     for (const item in cartItem) {
@@ -104,6 +121,7 @@ const ShopContextProvider = (props: ShopContextProviderProps) => {
     cartItem,
     addToCart,
     removeFromCart,
+    clearCart,
   };
 
   return (

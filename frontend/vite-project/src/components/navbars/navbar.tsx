@@ -25,7 +25,7 @@ export const Navbar = () => {
           alt="logo"
           className="w-[30px] h-[30px] md:h-[48px] md:w-[40px] lg:h-[48px] lg:w-[40px] xl:w-[40px] xl:h-[48px]"
         />
-        <p to="/" className="text-black font-semibold text-base xl:text-lg">
+        <p className="text-black font-semibold text-base xl:text-lg">
           SHOPPALA
         </p>
       </Link>
