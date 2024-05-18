@@ -1,28 +1,53 @@
-import React, { useContext, useEffect, useState } from "react";
-import { ShopContext } from "../contexts/shopContext";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useState } from 'react';
+import { ShopContext } from '../contexts/shopContext';
+import { Link } from 'react-router-dom';
 
 const CheckOutItem = () => {
   const { getTotalCartAmount, all_products, cartItem } =
     useContext(ShopContext);
 
   const [data, setData] = useState({
-    firstname: "",
-    lastname: "",
-    phone: "",
-    country: "",
-    address: "",
-    city: "",
-    state: "",
-    zipcode: "",
+    firstname: '',
+    lastname: '',
+    phone: '',
+    country: '',
+    address: '',
+    city: '',
+    state: '',
+    zipcode: '',
   });
 
   const changeHandler = (e: any) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Add your code here to submit the form data to the backend
+    console.log('Form Submitted', { data, all_products });
+    fetch('http://localhost:4000/addOrder', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ data, products: all_products }),
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        // Handle the response from the backend
+        console.log(result);
+      })
+      .catch((error) => {
+        // Handle any errors that occurred during the request
+        console.error(error);
+      });
+  };
+
   return (
-    <form className="flex flex-col md:flex-row my-10 pl-[40px]">
+    <form
+      className="flex flex-col md:flex-row my-10 pl-[40px]"
+      onSubmit={submit}
+    >
       <div className="w-full md:w-1/2 mb-5">
         <div className="flex font-semibold text-2xl ml-5 pt-6">
           BILLING ADDRESS
