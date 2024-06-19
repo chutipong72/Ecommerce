@@ -23,14 +23,9 @@ const CheckOutItem = () => {
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // กรองสินค้าที่อยู่ใน cartItem เท่านั้น
-    const filteredProducts = all_products.filter(
-      (product) => cartItem[product.id] > 0
-    );
-
     console.log("Form Submitted", {
       data,
-      products: filteredProducts,
+      products: all_products,
     });
 
     fetch("http://localhost:4000/addOrder", {
@@ -40,7 +35,7 @@ const CheckOutItem = () => {
       },
       body: JSON.stringify({
         ...data,
-        products: filteredProducts,
+        products: all_products,
       }),
     })
       .then((response) => response.json())
@@ -50,7 +45,6 @@ const CheckOutItem = () => {
       .catch((error) => {
         console.error(error);
       });
-
     window.location.replace("/");
   };
 
