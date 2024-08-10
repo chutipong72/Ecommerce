@@ -13,7 +13,7 @@ app.use(cors());
 
 // Connect to MongoDB database
 mongoose.connect(
-  "mongodb+srv://jojomemy:homme2542@cluster0.aa9w7qb.mongodb.net/e-commerce"
+  "mongodb+srv://chutipong:snkuXJpD2iYHgEUI@cluster0.r0m1g98.mongodb.net/e-commmerce"
 );
 
 // API Creation
@@ -44,7 +44,7 @@ app.use("/images", express.static(path.join(__dirname, "/upload/images")));
 app.post("/upload", upload.single("product"), (req, res) => {
   res.json({
     success: 1,
-    image_url: `http://localhost:${port}/images/${req.file.filename}`,
+    image_url: `https://ecommerce-ovkr.onrender.com/images/${req.file.filename}`,
   });
 });
 
